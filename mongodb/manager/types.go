@@ -4,6 +4,7 @@ import "github.com/proudlygeek/goscii/encoder"
 
 type MongoArtManager struct {
 	Encoder encoder.EncoderInterface
+	DatabaseURL string
 }
 
 type Art struct {

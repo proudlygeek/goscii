@@ -19,7 +19,7 @@ func (this *MongoWriter) Write(p []byte) (i int, err error) {
 
 func (this *MongoArtManager) Load(uri string) []byte {
 
-    session, err := mgo.Dial("localhost")
+    session, err := mgo.Dial(this.DatabaseURL)
     if err != nil {
         panic(err)
     }
@@ -39,7 +39,7 @@ func (this *MongoArtManager) Load(uri string) []byte {
 
 func (this *MongoArtManager) Save(writer *MongoWriter) string {
 
-    session, err := mgo.Dial("localhost")
+    session, err := mgo.Dial(this.DatabaseURL)
     if err != nil {
         panic(err)
     }
