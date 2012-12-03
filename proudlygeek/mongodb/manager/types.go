@@ -1,6 +1,6 @@
 package manager
 
-import "github.com/proudlygeek/goscii/encoder"
+import "proudlygeek/goscii/encoder"
 
 type MongoArtManager struct {
 	Encoder encoder.EncoderInterface

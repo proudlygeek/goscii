@@ -1,6 +1,6 @@
 //
 // MongoDB manager implementation of
-// github.com/proudlygeek/goscii/art/manager.ArtManager
+// proudlygeek/goscii/art/manager.ArtManager
 //
 package manager
 

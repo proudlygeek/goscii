@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/proudlygeek/goscii/encoder"
-	"github.com/proudlygeek/mongodb/manager"
+	"proudlygeek/goscii/encoder"
+	"proudlygeek/mongodb/manager"
 	"html/template"
 	"log"
 	"net/http"
