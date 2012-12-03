@@ -7,6 +7,8 @@ package manager
 import (
 	"labix.org/v2/mgo"
     "labix.org/v2/mgo/bson"
+    "net/url"
+    "os"
 )
 
 func (this *MongoWriter) Write(p []byte) (i int, err error) {
@@ -17,15 +19,32 @@ func (this *MongoWriter) Write(p []byte) (i int, err error) {
     return len(this.Buffer), err
 }
 
-func (this *MongoArtManager) Load(uri string) []byte {
-
+func (this *MongoArtManager) connect(collection string) (c *mgo.Collection, err error) {
     session, err := mgo.Dial(this.DatabaseURL)
     if err != nil {
-        panic(err)
+        return
     }
     defer session.Close()
 
-    c := session.DB("test").C("urls")
+    parsed, err := url.Parse(os.Getenv("MONGOLAB_URI"))
+    if err != nil {
+        return
+    }
+
+    database := parsed.Path[1:]
+
+    c = session.DB(database).C(collection)
+
+    return
+}
+
+
+func (this *MongoArtManager) Load(uri string) []byte {
+
+    c, err := this.connect("urls")
+    if err != nil {
+        panic(err)
+    }
 
     result := &Art{}
 
@@ -39,13 +58,10 @@ func (this *MongoArtManager) Load(uri string) []byte {
 
 func (this *MongoArtManager) Save(writer *MongoWriter) string {
 
-    session, err := mgo.Dial(this.DatabaseURL)
+    c, err := this.connect("counters")
     if err != nil {
         panic(err)
     }
-    defer session.Close()
-
-    c := session.DB("test").C("counters")
 
     // If counter document doesn't exist create it
     if n, err := c.Count(); n == 0 {
@@ -67,7 +83,10 @@ func (this *MongoArtManager) Save(writer *MongoWriter) string {
         panic(err)
     }
 
-    c = session.DB("test").C("urls")
+    c, err = this.connect("urls")
+    if err != nil {
+        panic(err)
+    }
     err = c.Insert(bson.M{"_id": doc.C, "content": writer.Buffer})
     if err != nil {
         panic(err)
