@@ -5,3 +5,6 @@
 ## Installation
 
 TODO: Write installation description
+
+[1]: http://golang.org/
+[2]: http://en.wikipedia.org/wiki/ASCII_art
