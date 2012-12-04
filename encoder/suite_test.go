@@ -1,20 +1,20 @@
 package encoder_test
 
 import (
-	. "launchpad.net/gocheck"
 	"github.com/proudlygeek/goscii/encoder"
-	"testing"
-	"os"
+	"image"
+	_ "image/jpeg"
+	_ "image/png"
+	. "launchpad.net/gocheck"
 	"log"
-    "image"
-    _ "image/jpeg"
-    _ "image/png"
+	"os"
+	"testing"
 )
 
 // Hook up gocheck into the gotest runner.
 func Test(t *testing.T) { TestingT(t) }
 
-type EncoderSuite struct{
+type EncoderSuite struct {
 	Encoder *encoder.Encoder
 }
 
@@ -29,7 +29,7 @@ type WriterMock struct {
 
 func (this *ReaderMock) Read(p []byte) (n int, err error) {
 	for _, b := range this.Data {
-		p =  append(p, b)
+		p = append(p, b)
 	}
 
 	return len(p), err
@@ -37,10 +37,10 @@ func (this *ReaderMock) Read(p []byte) (n int, err error) {
 
 func (this *WriterMock) Write(p []byte) (n int, err error) {
 	for _, b := range p {
-        this.Data = append(this.Data, b)
-    }
+		this.Data = append(this.Data, b)
+	}
 
-    return len(this.Data), err
+	return len(this.Data), err
 }
 
 // Init gocheck
@@ -49,7 +49,7 @@ var _ = Suite(&EncoderSuite{})
 
 // Setup
 func (s *EncoderSuite) SetUpTest(c *C) {
-    s.Encoder = &encoder.Encoder{}
+	s.Encoder = &encoder.Encoder{}
 }
 
 // Load test image utils
@@ -60,8 +60,8 @@ func (s *EncoderSuite) LoadImage(filename string) (m image.Image, err error) {
 	}
 	defer file.Close()
 	m, _, err = image.Decode(file)
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 	return
 }

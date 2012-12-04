@@ -3,18 +3,18 @@ package manager
 import "github.com/proudlygeek/goscii/encoder"
 
 type MongoArtManager struct {
-	Encoder encoder.EncoderInterface
+	Encoder     encoder.EncoderInterface
 	DatabaseURL string
 }
 
 type Art struct {
-    Content []byte
+	Content []byte
 }
 
 type Doc struct {
-    C int
+	C int
 }
 
 type MongoWriter struct {
-    Buffer []byte
+	Buffer []byte
 }

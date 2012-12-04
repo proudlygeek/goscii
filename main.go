@@ -12,7 +12,7 @@ import (
 
 var (
 	asciiEncoder    = &encoder.Encoder{}
-	mongoArtManager = &manager.MongoArtManager{Encoder: asciiEncoder, DatabaseURL: os.Getenv("MONGOLAB_URI") }
+	mongoArtManager = &manager.MongoArtManager{Encoder: asciiEncoder, DatabaseURL: os.Getenv("MONGOLAB_URI")}
 )
 
 func logException(res http.ResponseWriter, req *http.Request) {

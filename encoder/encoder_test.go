@@ -4,8 +4,8 @@
 package encoder_test
 
 import (
-	. "launchpad.net/gocheck"
 	"fmt"
+	. "launchpad.net/gocheck"
 	"strings"
 )
 
