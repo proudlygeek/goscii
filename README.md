@@ -6,5 +6,10 @@
 
 TODO: Write installation description
 
+## Try it!
+
+You can try *Goscii* online at [http://goscii.herokuapp.com][3]
+
 [1]: http://golang.org/
 [2]: http://en.wikipedia.org/wiki/ASCII_art
+[3]: http://goscii.herokuapp.com
