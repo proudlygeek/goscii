@@ -1,0 +1,12 @@
+{{ define "title" }} Upload a picture {{ end }}
+
+{{ define "content" }}
+	<div class="span6 offset6 upload-box">
+		<p> Hello, please upload a picture: </p>
+
+		<form method="post" action ="/upload" enctype="multipart/form-data">
+			<input type="file" id="pic" name="pic">
+			<button class="btn btn-primary"><b class="icon-white icon-upload"></b>Upload</button>
+		</form>
+	</div>
+{{ end }}

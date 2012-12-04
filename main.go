@@ -23,7 +23,7 @@ func logException(res http.ResponseWriter, req *http.Request) {
 
 func home(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html")
-	t, _ := template.ParseFiles("views/layout.html", "views/index.html")
+	t, _ := template.ParseFiles("templates/layout.html", "templates/index.html")
 	t.Execute(res, nil)
 }
 
@@ -56,7 +56,7 @@ func upload(res http.ResponseWriter, req *http.Request) {
 
 func show(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html")
-	t, _ := template.ParseFiles("views/layout.html", "views/upload.html")
+	t, _ := template.ParseFiles("templates/layout.html", "templates/upload.html")
 	t.Execute(res, nil)
 	fmt.Println("Loading Art", req.URL.Path[5:])
 	art := mongoArtManager.Load(req.URL.Path[5:])

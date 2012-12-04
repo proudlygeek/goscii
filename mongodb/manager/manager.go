@@ -8,8 +8,8 @@ import (
 	"labix.org/v2/mgo"
     "labix.org/v2/mgo/bson"
     "net/url"
-    "os"
 )
+
 
 func (this *MongoWriter) Write(p []byte) (i int, err error) {
     for _, b := range p {
@@ -19,14 +19,12 @@ func (this *MongoWriter) Write(p []byte) (i int, err error) {
     return len(this.Buffer), err
 }
 
-func (this *MongoArtManager) connect(collection string) (c *mgo.Collection, err error) {
-    session, err := mgo.Dial(this.DatabaseURL)
-    if err != nil {
-        return
+func (this *MongoArtManager) connect(session *mgo.Session, collection string) (c *mgo.Collection, err error) {
+    if this.DatabaseURL == "" {
+        this.DatabaseURL = "localhost"
     }
-    defer session.Close()
-
-    parsed, err := url.Parse(os.Getenv("MONGOLAB_URI"))
+ 
+    parsed, err := url.Parse(this.DatabaseURL)
     if err != nil {
         return
     }
@@ -40,8 +38,14 @@ func (this *MongoArtManager) connect(collection string) (c *mgo.Collection, err 
 
 
 func (this *MongoArtManager) Load(uri string) []byte {
+    
+    session, err := mgo.Dial(this.DatabaseURL)
+    if err != nil {
+        panic(err)
+    }
+    defer session.Close()
 
-    c, err := this.connect("urls")
+    c, err := this.connect(session, "urls")
     if err != nil {
         panic(err)
     }
@@ -57,8 +61,13 @@ func (this *MongoArtManager) Load(uri string) []byte {
 }
 
 func (this *MongoArtManager) Save(writer *MongoWriter) string {
+    session, err := mgo.Dial(this.DatabaseURL)
+    if err != nil {
+        panic(err)
+    }
+    defer session.Close()
 
-    c, err := this.connect("counters")
+    c, err := this.connect(session, "counters")
     if err != nil {
         panic(err)
     }
@@ -83,7 +92,7 @@ func (this *MongoArtManager) Save(writer *MongoWriter) string {
         panic(err)
     }
 
-    c, err = this.connect("urls")
+    c, err = this.connect(session, "urls")
     if err != nil {
         panic(err)
     }

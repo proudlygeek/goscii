@@ -24,7 +24,7 @@ func (this *Encoder) DecodeImage(stream io.Reader) (m image.Image, err error) {
 /** 
  * Converts an image to a stream of ASCII Chars.
  * 
- * The image stream is scanned in blocks of 3x2 pixels and the
+ * The image stream is scanned in blocks of 4x3 pixels and the
  * algorithm performs as follows:
  * 
  * 1. Read pixel's R, G, B and Alpha channels and generate a <span>
@@ -46,16 +46,16 @@ func (this *Encoder) Asciify(m image.Image, res io.Writer) (err error) {
     fmt.Fprintln(res, "<br>")
 
     // Init ascii result buffer
-    var ascii = make([][]string, verticalLimit / 3 + 1)
+    var ascii = make([][]string, verticalLimit / 5 + 1)
 
     for i := 0; i < len(ascii); i++ {
-        ascii[i] = make([]string, horizontalLimit / 2 + 1)
+        ascii[i] = make([]string, horizontalLimit / 4 + 1)
     }
 
     i := 0
-    for y := bounds.Min.Y; y < bounds.Max.Y; y += 3 {
+    for y := bounds.Min.Y; y < bounds.Max.Y; y += 5 {
         j := 0
-        for x := bounds.Min.X; x < bounds.Max.X; x += 2 {
+        for x := bounds.Min.X; x < bounds.Max.X; x += 4 {
             r, g, b, a := m.At(x, y).RGBA()
             r ,g, b, a = r >> 8, g >> 8, b >> 8, a >> 8
 
